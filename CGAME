@@ -1,0 +1,128 @@
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+#include<conio.h>
+char square[10] = {'0','1','2','3','4','5','6','7','8','9'};
+int checkWin();
+void drawBoard();
+
+int main()
+{
+	int player = 1, i=-1 ,choice,type;
+	char mark;
+	printf("1)SINGLE PLAYER \n2)TWO PLAYER\n");
+	scanf("%d",&type);                                 // INPUT THE MODE OF GAME.
+	while(i == -1)                                     //LOOP WILL RUN TILL ANY ONE WIN OR GAME IS DRAW
+	{
+		drawBoard();                                   //FUNCTION TO DRAW BOARD
+		
+		if(player % 2)                                 //AS THE VALE OF PLAYER INCRESE IT WILL KEEP IT 1 AND 2 ALTERNATIVELY 
+		    player=1 ;
+		else
+		    player=2 ;
+		    
+		if(player==1)                                   //INPUT LOCATION OF CHOICE(PLAYER 1) IN 3X3 MATRIX
+		{    
+		    printf("Player %d, enter the choice : ",player);
+		    scanf("%d",&choice);
+		
+		    mark='X';
+		}
+	    else if(type==1)                                 //COMPUTER WILL RANDOMLY ALLOCATE LOCATION BETWEEN 1 TO 9
+	    {     
+		    choice=rand() % 10;
+		    if (choice==0)
+		    {
+			srand(time(NULL));
+			choice=rand() % 10;
+		    }
+		mark='O';
+		}
+		else                                              //INPUT LOCATION OF CHOICE(PLAYER 2) IN 3X3 MATRIX
+		{
+			printf("Player %d, enter the choice : ",player);
+		    scanf("%d",&choice);
+		    mark='O';
+		}
+	
+			    
+		if(choice == 1 && square[1] == '1')              //CHOICE LOCATION IS INITIALISED WITH SYMBOL
+			square[1] = mark;
+		else if(choice == 2 && square[2] == '2')
+			square[2] = mark;
+			else if(choice == 3 && square[3] == '3')
+			square[3] = mark;
+			else if(choice == 4 && square[4] == '4')
+			square[4] = mark;
+			else if(choice == 5 && square[5] == '5')
+			square[5] = mark;
+			else if(choice == 6 && square[6] == '6')
+			square[6] = mark;
+			else if(choice == 7 && square[7] == '7')
+			square[7] = mark;
+			else if(choice == 8 && square[8] == '8')
+			square[8] = mark;
+			else if(choice == 9 && square[9] == '9')
+			square[9] = mark;
+			
+			else {
+				if(player==1 || (type==2 && player==2))
+				{
+				    printf("Invalid option !");
+				    getch();
+			    }
+				player--;                                                    //IF INVALID INPUT IS BEING TYPED THEN SAME PLAYER CAN REINPUT CHOICE 
+				
+			}
+			i = checkWin();                                                  //ONCE ANY CHOICE HAVE INPUTED PROGRAM WILL CHECK FOR WINNER OR DRAW
+			player++;	                                                    
+		
+	}
+	
+	drawBoard();
+	if(i==1){
+		printf("==>Player %d won",--player);
+	}
+	else {
+		printf("==>Game draw");
+	}
+	
+		return 0;
+}
+int checkWin(){
+	if(square[1] == square[2] && square[2] == square[3])
+		return 1;
+	else if (square[4] == square[5] && square[5] == square[6])
+		return 1;
+	else if(square[7] == square[8] && square[8] == square[9])
+		return 1;
+	else if(square[1] == square[4] && square[4] == square[7])
+		return 1;
+	else if(square[2] == square[5] && square[5] == square[8])
+		return 1;
+	else if(square[3] == square[6] && square[6] == square[9])
+		return 1;
+	else if(square[1] == square[5] && square[5] == square[9])
+		return 1;
+	else if(square[3] == square[5] && square[5] == square[7])
+		return 1;
+	else if(square[1] != '1' && square[2] != '2' && square[3] != '3' && square[4] !='4' && square[5] != '5' && square[6] != '6' && square[7] != '7' && square[8] != '8' && square[9] != '9')
+		return 0;
+	else 
+		return -1;	
+}
+
+void drawBoard(){
+	system("cls");
+	printf("     Tic Tac Toe \n");
+	printf("Player1 (X) - Player2 (O) \n\n\n");
+	printf("     |     |     \n");
+	printf("  %c  |  %c  |  %c  \n",square[1],square[2],square[3]);
+	printf("_____|_____|_____\n");
+	printf("     |     |     \n");
+	printf("  %c  |  %c  |  %c  \n",square[4],square[5],square[6]);
+	printf("_____|_____|_____\n");
+	printf("     |     |     \n");
+	printf("  %c  |  %c  |  %c  \n",square[7],square[8],square[9]);
+	printf("     |     |     \n");	
+}
